@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "./fonts.css"; /* kalau kamu mau font custom */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
