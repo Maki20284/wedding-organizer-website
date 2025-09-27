@@ -8,33 +8,32 @@ export default function Navbar() {
         {/* Container navbar */}
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="text-xl font-semibold text-black tracking-wide font-serif">
+          <div className="text-xl font-semibold text-black tracking-wide font-lora">
             W.O.
           </div>
-
           {/* Menu di Tengah */}
-          <div className="flex gap-8">
+          <div className="flex gap-[30px] content-center">
             <Link
               to="/"
-              className="text-base font-semibold text-black font-cormorant hover:text-gray-600 transition px-4"
+              className="text-[16px] font-semibold text-black font-cormorant hover:text-gray-600 transition"
             >
               Beranda
             </Link>
             <Link
               to="/katalog"
-              className="text-base font-semibold text-black font-cormorant hover:text-gray-600 transition px-4"
+              className="text-[16px] font-semibold text-black font-cormorant hover:text-gray-600 transition"
             >
               Katalog
             </Link>
             <Link
               to="/tentang"
-              className="text-base font-semibold text-black font-cormorant hover:text-gray-600 transition px-4"
+              className="text-[16px] font-semibold text-black font-cormorant hover:text-gray-600 transition"
             >
               Tentang Kami
             </Link>
             <Link
               to="/kontak"
-              className="text-base font-semibold text-black font-cormorant hover:text-gray-600 transition px-4"
+              className="text-[16px] font-semibold text-black font-cormorant hover:text-gray-600 transition"
             >
               Kontak
             </Link>
