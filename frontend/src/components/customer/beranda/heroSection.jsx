@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function HeroSection() {
   return (
     <section
@@ -9,21 +7,21 @@ export default function HeroSection() {
       }}
     >
       {/* Overlay hitam transparan */}
-      <div className="absolute inset-0 bg-black/20"></div>
+      <div className="absolute inset-0 bg-burgundy/30"></div>
 
       {/* Konten hero */}
       <div className="relative z-10 flex items-center justify-center h-full px-4">
         <div className="text-center text-white max-w-3xl">
-          <h1 className="text-[64px] md:text-6xl mb-4 font-allison">
-            Welcome to Our Wedding Organizer
+          <h1 className="text-[64px] md:text-6xl mb-4 font-allison text-ivory">
+            Mewujudkan Pernikahan Impian Anda
           </h1>
-          <p className="text-[24px] md:text-2xl mb-8 font-cormorant">
-            Making Your Special Day Unforgettable
+          <p className="text-[24px] md:text-2xl mb-8 font-cormorant text-ivory">
+            Bersama kami, setiap momen berkesan dan setiap detail sempurna untuk hari istimewa Anda.
           </p>
           <a
             href="#services"
-            className="bg-white text-black px-6 py-3 rounded-full font-cormorant font-bold hover:bg-black hover:text-white transition">
-            Explore Services
+            className="bg-ivory text-black px-6 py-3 rounded-full font-cormorant font-bold hover:bg-burgundy hover:text-champagne transition">
+            Jelajahi Katalog
           </a>
         </div>
       </div>
