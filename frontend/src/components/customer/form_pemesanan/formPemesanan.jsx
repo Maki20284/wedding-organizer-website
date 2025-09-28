@@ -10,7 +10,9 @@ export default function FormPemesanan() {
     package: "",
   });
 
-  // Daftar paket (sesuai katalog)
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const packages = [
     "Pernikahan Sederhana",
     "Pernikahan Outdoor",
@@ -26,16 +28,44 @@ export default function FormPemesanan() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Data pemesanan:", formData);
-    alert("Pemesanan berhasil disubmit!");
+    setErrorMessage(""); // reset error
+
+    try {
+      const response = await fetch("http://localhost:5000/api/pesanan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Gagal membuat pesanan");
+      }
+
+      // reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        date: "",
+        package: "",
+      });
+
+      // tampilkan notifikasi sukses
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(error.message);
+    }
   };
 
   return (
@@ -44,6 +74,11 @@ export default function FormPemesanan() {
         <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
           Form Pemesanan
         </h1>
+
+        {errorMessage && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{errorMessage}</div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Nama depan & belakang */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -154,6 +189,34 @@ export default function FormPemesanan() {
           </div>
         </form>
       </div>
+
+      {/* Notifikasi sukses */}
+      {showSuccess && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg text-center animate-fadeIn scale-95">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center animate-bounce">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 text-green-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              Pesanan berhasil dibuat!
+            </h2>
+            <p className="text-gray-600 text-sm">
+              Kami telah mengirimkan email berisi link konfirmasi pembayaran.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
