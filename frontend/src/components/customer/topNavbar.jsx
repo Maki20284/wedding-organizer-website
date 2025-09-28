@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function TopNavbar() {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-ivory/50 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Container navbar */}
         <div className="flex items-center h-16">
           {/* Logo */}
-          <div className="text-xl font-semibold text-black tracking-wide font-lora">
+          <div className="text-xl font-semibold text-black tracking-wide font-cormorant">
             W.O.
           </div>
           {/* Menu di Tengah */}
