@@ -32,9 +32,9 @@ export default function DaftarKatalog() {
         {currentItems.map((item) => (
           <div key={item.id_katalog} onClick={() => setSelectedKatalog(item)} className="cursor-pointer">
             <CatalogCard
-              image={`http://localhost:5000${item.gambar}`}
-              name={item.nama_katalog}
-              price={item.harga}
+              image={`http://localhost:5000${item.gambar}`}   // dari upload admin
+              name={item.nama_katalog}                       // nama dari DB
+              price={item.harga}                             // harga dari DB
             />
           </div>
         ))}

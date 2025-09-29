@@ -17,7 +17,7 @@ export default function DeskripsiKatalog({ katalog, onClose }) {
 
         {/* Judul */}
         <h2 className="text-2xl font-cormorant font-bold text-burgundy mb-2">
-          {katalog.name}
+          {katalog.nama_katalog}
         </h2>
 
         {/* Rating */}
@@ -32,26 +32,12 @@ export default function DeskripsiKatalog({ katalog, onClose }) {
 
         {/* Harga */}
         <p className="text-xl font-semibold text-burgundy mb-4">
-          Rp {katalog.price.toLocaleString("id-ID")}
+          Rp {Number(katalog.harga).toLocaleString("id-ID")}
         </p>
 
         {/* Deskripsi */}
         <div className="text-gray-700 space-y-3 mb-6">
-          <p>
-            Paket {katalog.name} dirancang khusus untuk memberikan pengalaman
-            pernikahan yang tak terlupakan. Kami menghadirkan nuansa elegan dan
-            penuh kehangatan sesuai dengan keinginan Anda.
-          </p>
-          <p>
-            Tim profesional kami akan memastikan bahwa setiap detail berjalan
-            sempurna, mulai dari dekorasi, dokumentasi, hingga layanan
-            hiburan. Semua disusun agar hari istimewa Anda penuh makna.
-          </p>
-          <p>
-            Dengan harga yang kompetitif, paket ini adalah pilihan tepat bagi
-            Anda yang menginginkan kualitas terbaik tanpa kompromi. Jadikan
-            momen pernikahan Anda benar-benar berkesan bersama kami.
-          </p>
+          <p>{katalog.deskripsi}</p>
         </div>
 
         {/* Tombol Pesan */}

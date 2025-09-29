@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function CatalogCard({ image, name, price }) {
+export default function CardKatalog({ image, name, price }) {
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition">
       {/* Gambar katalog */}
@@ -8,6 +8,9 @@ export default function CatalogCard({ image, name, price }) {
         src={image}
         alt={name}
         className="w-full h-48 object-cover"
+        onError={(e) => {
+          e.target.src = "/fallback.jpg"; // fallback kalau gambar gagal dimuat
+        }}
       />
 
       {/* Konten katalog */}
@@ -16,7 +19,7 @@ export default function CatalogCard({ image, name, price }) {
           {name}
         </h3>
         <p className="text-burgundy text-[16px] mt-[11px]">
-          Rp {price.toLocaleString("id-ID")}
+          Rp {Number(price).toLocaleString("id-ID")}
         </p>
       </div>
     </div>
