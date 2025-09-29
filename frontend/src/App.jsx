@@ -8,6 +8,7 @@ import EditProfil from "./pages/admin_pages/editProfilWebsite";
 import Register from "./pages/admin_pages/register";
 import EditKatalog from "./pages/admin_pages/editKatalog";
 import EditPesanan from "./pages/admin_pages/editPesanan";
+import Tentang from "./pages/customer_pages/tentang";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -28,6 +29,7 @@ function App() {
     <Route path="/" element={<Navigate to="/beranda" />} />
     <Route path="/beranda" element={<Beranda />} />
     <Route path="/katalog" element={<Katalog />} />
+    <Route path="/tentang" element={<Tentang />} />
     <Route path="/form-pemesanan" element={<Pemesanan />} />
     <Route path="/login-admin" element={<LoginAdmin setToken={setToken} />} />
     <Route path="/edit-profil" element={
