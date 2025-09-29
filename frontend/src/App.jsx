@@ -7,6 +7,7 @@ import LoginAdmin from "./pages/admin_pages/login";
 import EditProfil from "./pages/admin_pages/editProfilWebsite";
 import Register from "./pages/admin_pages/register";
 import EditKatalog from "./pages/admin_pages/editKatalog";
+import EditPesanan from "./pages/admin_pages/editPesanan";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -38,6 +39,11 @@ function App() {
     <Route path="/kelola-katalog" element={
       <ProtectedRoute>
         <EditKatalog token={token} />
+      </ProtectedRoute>
+    } />
+    <Route path="/kelola-pesanan" element={
+      <ProtectedRoute>
+        <EditPesanan token={token} />
       </ProtectedRoute>
     } />
   </Routes>

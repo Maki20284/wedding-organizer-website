@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function FormPemesanan() {
   const [formData, setFormData] = useState({
@@ -7,24 +7,25 @@ export default function FormPemesanan() {
     phone: "",
     email: "",
     date: "",
-    package: "",
+    packageId: "", // simpan id_katalog
   });
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [katalogs, setKatalogs] = useState([]); 
 
-  const packages = [
-    "Pernikahan Sederhana",
-    "Pernikahan Outdoor",
-    "Pernikahan Modern",
-    "Pernikahan Mewah",
-    "Pernikahan Romantis Indoor",
-    "Pernikahan Tradisional",
-    "Pernikahan Pantai",
-    "Pernikahan Ballroom Mewah",
-    "Pernikahan Intimate",
-    "Pernikahan Vintage",
-  ];
+  useEffect(() => {
+    const fetchKatalog = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/katalog");
+        const data = await res.json();
+        setKatalogs(data);
+      } catch (err) {
+        console.error("Gagal fetch katalog:", err);
+      }
+    };
+    fetchKatalog();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,15 +34,22 @@ export default function FormPemesanan() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(""); // reset error
+    setErrorMessage("");
+
+    // gabungkan nama depan + belakang
+    const payload = {
+      nama_pemesan: formData.firstName + " " + formData.lastName,
+      email_pemesan: formData.email,
+      no_hp: formData.phone,
+      tanggal_acara: formData.date,
+      id_katalog: formData.packageId,
+    };
 
     try {
       const response = await fetch("http://localhost:5000/api/pesanan", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -56,10 +64,9 @@ export default function FormPemesanan() {
         phone: "",
         email: "",
         date: "",
-        package: "",
+        packageId: "",
       });
 
-      // tampilkan notifikasi sukses
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
     } catch (error) {
@@ -83,9 +90,7 @@ export default function FormPemesanan() {
           {/* Nama depan & belakang */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-gray-700 mb-2 font-semibold">
-                Nama Depan
-              </label>
+              <label className="block text-gray-700 mb-2 font-semibold">Nama Depan</label>
               <input
                 type="text"
                 name="firstName"
@@ -96,9 +101,7 @@ export default function FormPemesanan() {
               />
             </div>
             <div>
-              <label className="block text-gray-700 mb-2 font-semibold">
-                Nama Belakang
-              </label>
+              <label className="block text-gray-700 mb-2 font-semibold">Nama Belakang</label>
               <input
                 type="text"
                 name="lastName"
@@ -110,11 +113,9 @@ export default function FormPemesanan() {
             </div>
           </div>
 
-          {/* No. Telepon */}
+          {/* Nomor Telepon */}
           <div>
-            <label className="block text-gray-700 mb-2 font-semibold">
-              Nomor Telepon
-            </label>
+            <label className="block text-gray-700 mb-2 font-semibold">Nomor Telepon</label>
             <input
               type="tel"
               name="phone"
@@ -128,9 +129,7 @@ export default function FormPemesanan() {
 
           {/* Email */}
           <div>
-            <label className="block text-gray-700 mb-2 font-semibold">
-              Email
-            </label>
+            <label className="block text-gray-700 mb-2 font-semibold">Email</label>
             <input
               type="email"
               name="email"
@@ -144,9 +143,7 @@ export default function FormPemesanan() {
 
           {/* Tanggal Acara */}
           <div>
-            <label className="block text-gray-700 mb-2 font-semibold">
-              Tanggal Acara
-            </label>
+            <label className="block text-gray-700 mb-2 font-semibold">Tanggal Acara</label>
             <input
               type="date"
               name="date"
@@ -159,20 +156,18 @@ export default function FormPemesanan() {
 
           {/* Dropdown Paket */}
           <div>
-            <label className="block text-gray-700 mb-2 font-semibold">
-              Paket Pernikahan
-            </label>
+            <label className="block text-gray-700 mb-2 font-semibold">Paket Pernikahan</label>
             <select
-              name="package"
-              value={formData.package}
+              name="packageId"
+              value={formData.packageId}
               onChange={handleChange}
               className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-burgundy focus:outline-none"
               required
             >
               <option value="">-- Pilih Paket --</option>
-              {packages.map((pkg, index) => (
-                <option key={index} value={pkg}>
-                  {pkg}
+              {katalogs.map((k) => (
+                <option key={k.id_katalog} value={k.id_katalog}>
+                  {k.nama_katalog}
                 </option>
               ))}
             </select>
@@ -208,9 +203,7 @@ export default function FormPemesanan() {
                 </svg>
               </div>
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              Pesanan berhasil dibuat!
-            </h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-2">Pesanan berhasil dibuat!</h2>
             <p className="text-gray-600 text-sm">
               Kami telah mengirimkan email berisi link konfirmasi pembayaran.
             </p>
